@@ -1,0 +1,3 @@
+verifier email before stock in DB
+make pwd hard before stock in DB
+check link before send it in mail

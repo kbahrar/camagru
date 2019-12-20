@@ -1,0 +1,125 @@
+.head{
+    background-color: black;
+    color: aliceblue;
+    text-align: center;
+    padding: 3%;
+}
+
+.foot{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #212529;
+    color: white;
+    text-align: center;
+}
+
+
+
+.form{
+    border: 3px solid black;
+    /* text-align: center; */
+
+    display: block;
+    margin: 2% 25%;
+    padding: 5%;
+    width: 50%;
+    height: 40%;
+    background-color: black;
+    color: white;
+    border-radius: 10%;
+    box-shadow: 20px 20px 80px blue; 
+}
+
+.button {
+    background-color: white; 
+    border: 2px solid pink;
+    color: black;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    cursor: pointer;
+  }
+
+  .button:hover{
+    background-color: pink;
+    /* color: aliceblue; */
+  }
+
+.img_prf{
+    border: 2px solid wheat;
+    border-radius: 50px; 
+}
+
+
+body {
+  background: #007bff;
+  background: linear-gradient(to left, #0062E6, #33AEFF);
+}
+
+.img_form{
+  border: 3px solid black;
+  /* text-align: center; */
+
+  /* display: inherit; */
+  margin: 2% 10%;
+  padding: 5%;
+  width: auto;
+  height: auto;
+  background-color: black;
+  color: white;
+  border-radius: 10%;
+  box-shadow: 20px 20px 80px blue; 
+}
+
+.parent {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+.image1 {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+.image2 {
+  position: absolute;
+  top: 35%;
+  left: 35%;
+}
+
+.gmarg{
+  padding: 5%;
+  margin: 1%;
+}
+
+.main {
+  background: #007bff;
+  background: linear-gradient(to left, #0062E6, #33AEFF);
+  padding:20px;
+  float:left;
+  width:80%; /* The width is 60%, by default */
+  /* height: 90%; */
+}
+
+.right {
+  background: #007bff;
+  background: linear-gradient(to left, #0062E6, #33AEFF);
+  padding:20px;
+  float:left;
+  width:20%; /* The width is 20%, by default */
+  /* height: 90%; */
+}
+
+/* Use a media query to add a break point at 800px: */
+@media screen and (max-width:800px) {
+   .main, .right {
+    width:100%; /* The width is 100%, when the viewport is 800px or smaller */
+  }
+}
