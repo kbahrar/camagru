@@ -10,7 +10,7 @@ define('PUBROOT', dirname(dirname(dirname(__FILE__))).'/public');
 
 // Url Root
 define('URL', 'http://localhost');
-define('URLROOT', 'http://localhost/camagru');
+define('URLROOT', 'http://localhost/');
 
 // Site Name
 define('SITENAME', 'Camagru');
