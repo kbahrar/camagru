@@ -28,7 +28,7 @@
         }
         elseif (isset($_GET["action"]) && $_GET["action"] == "verify")
         {
-            if (!isset($_GET["key"]) || !is_array($_GET["key"]) || empty($_GET["key"]))
+            if (!isset($_GET["key"]) || is_array($_GET["key"]) || empty($_GET["key"]))
                 throw new Exception("Invalide validation !");
             else
             {
@@ -40,14 +40,14 @@
             require("view/forget.php");
         elseif (isset($_GET["action"]) && $_GET["action"] == "getmail")
         {
-            if (!isset($_POST["mail"]) || !is_array($_POST["mail"]) || empty($_POST["mail"]))
+            if (!isset($_POST["mail"]) || is_array($_POST["mail"]) || empty($_POST["mail"]))
                 throw new Exception("Fields should not be empty !");
             else
                 checkMail($_POST["mail"]);
         }
         elseif (isset($_GET["action"]) && $_GET["action"] == "forget")
         {
-            if (empty($_GET["key"]))
+            if (!isset($_GET["key"]) || is_array($_GET["key"]) || empty($_GET["key"]))
                 throw new Exception("Invalide validation !");
             else
             {
@@ -57,7 +57,7 @@
         }
         elseif (isset($_GET["action"]) && $_GET["action"] == "getpwd")
         {
-            if (empty($_GET["key"]))
+            if (!isset($_GET["key"]) || is_array($_GET["key"]) || empty($_GET["key"]))
                 throw new Exception("Invalide validation !");
             else
             {

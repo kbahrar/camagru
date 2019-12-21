@@ -84,7 +84,7 @@
                 $req = $db->prepare('INSERT INTO users(uname, email, pwd, verify, vkey) Values (?, ?, ?, false, ?)');
                 $check = $req->execute(array($name, $mail, $hash, $vkey));
                 if ($check !== false)
-                    $this->mailIt("mail_confirm", $mail, 'http://localhost/index.php?action=verify&key=' . $vkey);
+                    $this->mailIt("mail_confirm", $mail, URLROOT.'index.php?action=verify&key=' . $vkey);
     
                 return $check;
             }
@@ -99,7 +99,7 @@
             $req->execute(array($mail));
             $req = $req->fetch();
             if ($req !== false)
-                $this->mailIt("pwd_reset", $mail, 'http://localhost/index.php?action=forget&key='. $req["vkey"]);
+                $this->mailIt("pwd_reset", $mail, URLROOT. 'index.php?action=forget&key='. $req["vkey"]);
             return $req;
         }
 
@@ -165,7 +165,7 @@
                 $vkey = $this->retVkey($id);
                 if ($check !== false)
                 {
-                    $this->mailIt("mail_confirm", $value, 'http://localhost/index.php?action=verify&key=' . $vkey);
+                    $this->mailIt("mail_confirm", $value, URLROOT . 'index.php?action=verify&key=' . $vkey);
                     $_SESSION["email"] = $value;
                 }
                 return $check;

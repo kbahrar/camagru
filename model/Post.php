@@ -90,7 +90,7 @@
                 if ($_SESSION["notif"] == true)
                 {
                     $mail = $this->get_mail_post($post_id);
-                    $this->mailIt("like_notif", $mail, 'http://localhost/post.php?post_id=' . $post_id);
+                    $this->mailIt("like_notif", $mail, URLROOT. 'post.php?post_id=' . $post_id);
                 }
                 $check = $this->update_post($post_id, 1);
             }
@@ -119,7 +119,7 @@
                 if ($_SESSION["notif"] == true)
                 {
                     $mail = $this->get_mail_post($post_id);
-                    $this->mailIt("comment_notif", $mail, 'http://localhost/post.php?post_id=' . $post_id);
+                    $this->mailIt("comment_notif", $mail, URLROOT.'post.php?post_id=' . $post_id);
                 }
                 $check = $this->update_post($post_id, 2);
             }
