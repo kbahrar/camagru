@@ -12,9 +12,9 @@
             }
             else if (isset($_GET["action"]) && ($_GET["action"] == "save"))
             {
-                if (!isset($_POST["image"]) || empty($_POST["image"]))
+                if (!isset($_POST["image"]) || is_array($_POST["image"]) || empty($_POST["image"]))
                     throw new Exception("Invalid Image !");
-                else if (!isset($_POST["num-fil"]) || empty($_POST["num-fil"]))
+                else if (!isset($_POST["num-fil"]) || is_array($_POST["num-fil"]) || empty($_POST["num-fil"]) || !is_numeric($_POST["num-fil"]))
                     throw new Exception("Filter Invalid !!");
                 else
                 {
@@ -28,7 +28,7 @@
                     if ($_GET["user_id"] == $_SESSION["id"])
                     {
                         if ($_GET["action"] == "del")
-                            call_remPost($_GET["post_id"]);
+                            call_remPost($_GET["post_id"], $_SESSION["id"]);
                         else
                             change_pdp($_GET["post_id"], $_GET["user_id"]);
                     }

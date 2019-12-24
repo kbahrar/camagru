@@ -1,4 +1,4 @@
-var start = 2;
+var start = 5;
 
 window.addEventListener('scroll', function(e){
     if (window.scrollY == document.body.scrollHeight - window.innerHeight)

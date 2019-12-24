@@ -3,6 +3,19 @@
     require_once('model/Mail.php');
     class Post extends Manager
     {
+        private function checkLike($user_id, $post_id)
+        {
+            $db = $this->dbConnect();
+
+            $req = $db->prepare('SELECT * FROM likes WHERE user_id = ? AND post_id = ?');
+            $req->execute(array($user_id, $post_id));
+            $req = $req->fetch();
+
+            if ($req == false)
+                return 0;
+            return 1;
+        }
+
         private function resize_image($url, $width, $height) {
             list($width_orig, $height_orig) = getimagesize($url);
             $ratio_orig = $width_orig / $height_orig;
@@ -72,27 +85,31 @@
             return $check;
         }
 
-        public function remPost($id)
+        public function remPost($id, $user_id)
         {
             $db = $this->dbConnect();
-            $req = $db->prepare('DELETE FROM posts WHERE id = ?');
-            $check = $req->execute(array($id));
+            $req = $db->prepare('DELETE FROM posts WHERE id = ? AND user_id = ?');
+            $check = $req->execute(array($id, $user_id));
 
             return $check;
         }
         public function addLike($user_id, $post_id)
         {
             $db = $this->dbConnect();
-            $req = $db->prepare('INSERT INTO likes(user_id, post_id) VALUES (?, ?)');
-            $check = $req->execute(array($user_id, $post_id));
-            if ($check !== false)
+            $check = false;
+            if ($this->checkLike($user_id, $post_id) == 0)
             {
-                if ($_SESSION["notif"] == true)
+                $req = $db->prepare('INSERT INTO likes(user_id, post_id) VALUES (?, ?)');
+                $check = $req->execute(array($user_id, $post_id));
+                if ($check !== false)
                 {
-                    $mail = $this->get_mail_post($post_id);
-                    $this->mailIt("like_notif", $mail, URLROOT. 'post.php?post_id=' . $post_id);
+                    if ($_SESSION["notif"] == true)
+                    {
+                        $mail = $this->get_mail_post($post_id);
+                        $this->mailIt("like_notif", $mail, URLROOT. 'post.php?post_id=' . $post_id);
+                    }
+                    $check = $this->update_post($post_id, 1);
                 }
-                $check = $this->update_post($post_id, 1);
             }
 
             return $check;
@@ -101,10 +118,14 @@
         public function remLike($user_id, $post_id)
         {
             $db = $this->dbConnect();
-            $req = $db->prepare('DELETE FROM likes WHERE user_id = ? AND post_id = ?');
-            $check = $req->execute(array($user_id, $post_id));
-            if ($check !== false)
-                $check = $this->update_post($post_id, -1);
+            $check = false;
+            if ($this->checkLike($user_id, $post_id) == 1)
+            {
+                $req = $db->prepare('DELETE FROM likes WHERE user_id = ? AND post_id = ?');
+                $check = $req->execute(array($user_id, $post_id));
+                if ($check !== false)
+                    $check = $this->update_post($post_id, -1);
+            }
 
             return $check;
         }
@@ -185,8 +206,23 @@
             return ($req);
         }
 
+        private function is_valid($img)
+        {
+            $str = $img;
+            if (base64_encode(base64_decode($str, true)) === $str && imagecreatefromstring(base64_decode($str)))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public function save_image($img, $num_fil)
         {
+            if ($num_fil < 1 || $num_fil > 6)
+                return false;
+            // if ($this->is_valid($img) == false)
+            //     return false;
             $urlfil = 'public/img/sup/' . $num_fil . '.png';
             if (!file_exists('upload/'))
                 mkdir("upload/", 0700);
@@ -194,9 +230,12 @@
           
             $image_parts = explode(";base64,", $img);
             $image_type_aux = explode("image/", $image_parts[0]);
+            if (!isset($image_type_aux[1]) || empty($image_type_aux[1]))
+                return false;
             $image_type = $image_type_aux[1];
           
-            $image_base64 = base64_decode($image_parts[1]);
+            if (!($image_base64 = base64_decode($image_parts[1], true)))
+                return false;
             $fileName = uniqid() . '.png';
 
             $file = $folderPath . $fileName;

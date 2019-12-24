@@ -8,7 +8,7 @@
     }
     else if (isset($_GET["action"]) && $_GET["action"] == "getdata")
     {
-        if (isset($_POST["start"]))
+        if (isset($_POST["start"]) && !is_array($_POST["start"]) && is_numeric($_POST["start"]))
             getdata($_POST["start"], 2);
     }
     else

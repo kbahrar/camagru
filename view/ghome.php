@@ -96,18 +96,9 @@
             </div>
             <div class="row">
                 <div class="col-sm-5 mt-2">
-                    <!-- <div class="input-group mb-3"> -->
-                        <input type="file" id="real-file" hidden="hidden">
+                        <input type="file" id="real-file" hidden="hidden" accept="image/*">
                         <button type="button" id="custom-button" class="btn btn-primary">CHOOSE AN IMAGE</button>
                         <span id="custom-text">No file chosen, yet</span>
-                        <!-- <div class="input-group-prepend">
-                            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-                        </div>
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="inPic" aria-describedby="inputGroupFileAddon01" accept="image/*">
-                            <label class="custom-file-label" for="inputGroupFile01">Choose Image</label>
-                        </div> -->
-                    <!-- </div> -->
                 </div>
             </div>
         </div>

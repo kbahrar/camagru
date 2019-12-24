@@ -16,10 +16,9 @@
             {
                 if (isset($_SESSION["token"]) && isset($_POST["token"]) && $_POST["token"] == $_SESSION["token"])
                 {
-
                     if ($_GET["action"] == "modu")
                     {
-                        if (isset($_POST["uname"]) && !empty($_POST["uname"]))
+                        if (isset($_POST["uname"]) && !is_array($_POST["uname"]) && !empty($_POST["uname"]))
                         {
                             if ($_POST["uname"] != $_SESSION["name"])
                                 updateUser($_POST["uname"], $_SESSION["id"], 1);
@@ -31,7 +30,7 @@
                     }
                     if ($_GET["action"] == "mode")
                     {
-                        if (isset($_POST["mail"]) && !empty($_POST["mail"]))
+                        if (isset($_POST["mail"]) && !is_array($_POST["mail"]) && !empty($_POST["mail"]))
                         {
                             if ($_POST["mail"] != $_SESSION["email"])
                                 updateUser($_POST["mail"], $_SESSION["id"], 2);
@@ -43,7 +42,7 @@
                     }
                     if ($_GET["action"] == "modp")
                     {
-                        if (isset($_POST["pwd"]) && !empty($_POST["pwd"]))
+                        if (isset($_POST["pwd"]) && !is_array($_POST["pwd"]) && !empty($_POST["pwd"]))
                             updateUser($_POST["pwd"], $_SESSION["id"], 3);
                         else
                             throw new Exception("empty field Password.");

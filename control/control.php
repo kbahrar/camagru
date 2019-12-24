@@ -27,24 +27,32 @@
     function updateUser($value, $id, $flag)
     {
         $rm = new RegistreManager();
-        if ($flag == 1)
-            $req = $rm->modName($value, $id);
-        else if ($flag == 2)
-            $req = $rm->modMail($value, $id);
-        else
-            $req = $rm->modPwd($value, $id);
-        
-        if ($req === false)
-            throw new Exception("something went wrong !");
-        else if ($req === -1)
-            throw new Exception("UserName or mail exist Choose another !");
+
+        if ($flag == 3 && $rm->validatePwd($value) == false)
+            throw new Exception("Password too easy !");
+        else if ($flag == 2 && $rm->validateEMAIL($value) == false)
+            throw new Exception("Mail not valid !");
         else
         {
-            $display  = "inline";
-            $msg      = "Updated with succes !!";
-            $display1 = "none";
-            $msg1     = "none";
-            require('view/vprofile.php');
+            if ($flag == 1)
+                $req = $rm->modName($value, $id);
+            else if ($flag == 2)
+                $req = $rm->modMail($value, $id);
+            else
+                $req = $rm->modPwd($value, $id);
+            
+            if ($req === false)
+                throw new Exception("something went wrong !");
+            else if ($req === -1)
+                throw new Exception("UserName or mail exist Choose another !");
+            else
+            {
+                $display  = "inline";
+                $msg      = "Updated with succes !!";
+                $display1 = "none";
+                $msg1     = "none";
+                require('view/vprofile.php');
+            }
         }
     }
 
@@ -137,6 +145,8 @@
         $ret = $rm->updatePwd($key, $pwd);
         if ($ret == -1)
             throw new Exception("invalid key !");
+        else if ($rm->validatePwd($pwd) == false)
+            throw new Exception("Password too easy !");
         else
         {
             $rm->updateKey($ret);

@@ -15,6 +15,7 @@
             </div>
             <div class="form-group">
                 <label for="pwd">PassWord :</label>
+                <small class="form-text text-danger">Should > 8 chars Mix Upcase, lowercase And numbers.</small>
                 <input type="password" class="form-control mb-5" name="pwd" id="pwd" placeholder="Password">
             </div>
             <div class="form-group">

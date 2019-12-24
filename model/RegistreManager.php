@@ -17,10 +17,23 @@
         public function validatePwd($pwd)
         {
             $i = 0;
+            $u = 0;
+            $l = 0;
+            $n = 0;
 
             while ($pwd[$i])
+            {
+                if (ctype_upper($pwd[$i]))
+                    $u++;
+                if (ctype_lower($pwd[$i]))
+                    $l++;
+                if (ctype_digit($pwd[$i]))
+                    $n++;
                 $i++;
-            if($i < 8)
+                if (!isset($pwd[$i]))
+                    break ;
+            }
+            if($i < 8 || $u == 0 || $n == 0 || $l == 0)
                 return false;
             else
                 return true;

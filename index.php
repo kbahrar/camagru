@@ -7,22 +7,29 @@
             header("Location: home.php");
         else if (isset($_GET["action"]) && $_GET["action"] == "reg")
             require("view/register.php");
-        elseif (isset($_GET["action"]) && $_GET["action"] == "reg1")
+        else if (isset($_GET["action"]) && $_GET["action"] == "reg1")
         {
-            if (empty($_POST["mail"]) || empty($_POST["pwd"]) || empty($_POST["user"]))
+            if (!isset($_POST["mail"]) || !isset($_POST["pwd"]) || !isset($_POST["user"]))
+                throw new Exception("set the Posts values !");
+            else if (is_array($_POST["mail"]) || is_array($_POST["pwd"]) || is_array($_POST["user"]))
+                throw new Exception("Do not give me an array !");
+            else if (empty($_POST["mail"]) || empty($_POST["pwd"]) || empty($_POST["user"]))
                 throw new Exception("Fields should not be empty !");
             else
             {
                 addUser($_POST["user"], $_POST["mail"], $_POST["pwd"]);
             }
         }
-        elseif (isset($_GET["action"]) && $_GET["action"] == "conx")
+        else if (isset($_GET["action"]) && $_GET["action"] == "conx")
         {
-            if (empty($_POST["pwd"]) || empty($_POST["user"]))
+            if (!isset($_POST["pwd"]) || !isset($_POST["user"]))
+                throw new Exception("set the Posts values !");
+            else if (is_array($_POST["pwd"]) || is_array($_POST["user"]))
+                throw new Exception("Do not give me an array !");
+            else if (empty($_POST["pwd"]) || empty($_POST["user"]))
                 throw new Exception("Fields should not be empty !");
             else
             {
-                sleep(1);
                 conn($_POST["user"], $_POST["pwd"]);
             }
         }

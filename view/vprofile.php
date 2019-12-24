@@ -43,6 +43,7 @@
                 <div class="form-group">
                     <label for="inputPassword4">Password</label>
                     <input type="password" class="form-control" name="pwd" id="inputPassword4" placeholder="Password">
+                    <small class="form-text text-danger">Should > 8 chars Mix Upcase, lowercase And numbers.</small>
                     <input type="hidden" name="token" value="<?= $_SESSION["token"] ?>">
                 </div>
                 <button type="submit" class="btn btn-primary btn-lg btn-block mt-5">Edit PassWord</button>
@@ -73,7 +74,7 @@
 ?>
             </div>
             <div class="col-sm text-center">
-                <a class="btn btn-danger btn-lg" href="gallery.php?action=delAccount">Delete your account</a>
+                <a class="btn btn-danger btn-lg" href="#">Delete your account</a>
             </div>
         </div>
     </div>

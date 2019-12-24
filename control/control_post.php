@@ -4,19 +4,22 @@
     {
         $p = new Post();
         $img_fil = $p->save_image($img, $num_fil);
-        if (empty($img_fil))
-            throw new Exception("Something went wrong !!");
-        $post = $p->addPost($user_id, $img_fil);
-        if ($post === false)
+        if (empty($img_fil) || $img_fil == false)
             throw new Exception("Something went wrong !!");
         else
-            header("Location: home.php");
+        {
+            $post = $p->addPost($user_id, $img_fil);
+            if ($post === false)
+                throw new Exception("Something went wrong !!");
+            else
+                header("Location: home.php");
+        }
     }
 
-    function call_remPost($id)
+    function call_remPost($id, $user_id)
     {
         $p = new Post();
-        $del = $p->remPost($id);
+        $del = $p->remPost($id, $user_id);
         if ($del === false)
             throw new Exception("Something went wrong !!");
         else
