@@ -3,7 +3,6 @@ var start = 5;
 window.addEventListener('scroll', function(e){
     if (window.scrollY == document.body.scrollHeight - window.innerHeight)
     {
-        this.console.log(start);
         if (this.window.XMLHttpRequest)
             var myReq = new XMLHttpRequest();
         else

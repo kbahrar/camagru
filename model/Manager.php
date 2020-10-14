@@ -7,6 +7,7 @@
             try
             {
                 $db = new PDO(DB_DSN, DB_USER, DB_PASS);
+                $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 return $db;
             }
             catch(Exception $e)

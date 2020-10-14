@@ -1,61 +1,66 @@
- (function() {
+const realFileBtn = document.getElementById("real-file");
+const customBtn = document.getElementById("custom-button");
+const customTxt = document.getElementById("custom-text");
 
-  const realFileBtn = document.getElementById("real-file");
-  const customBtn = document.getElementById("custom-button");
-  const customTxt = document.getElementById("custom-text");
 
-  
-  var streaming = false,
-  video        = document.querySelector('#video'),
-  cover        = document.querySelector('#cover'),
-  canvas       = document.querySelector('#canvas'),
-  photo        = document.querySelector('#img-src'),
-  startbutton  = document.querySelector('#startbutton'),
-  filter = document.querySelector('#filter-src'),
-  radio        = document.getElementsByName('filter'),
-  width = 320,
-  height = 0;
-  
-  navigator.getMedia = ( navigator.getUserMedia ||
-    navigator.webkitGetUserMedia ||
-    navigator.mozGetUserMedia ||
-    navigator.msGetUserMedia);
-    
-    navigator.getMedia(
-      {
-        video: true,
-        audio: false
-      },
-      function(stream) {
-        if (navigator.mozGetUserMedia) {
-          video.mozSrcObject = stream;
-        } else {
-          // var vendorURL = window.URL || window.webkitURL;
-          
-          // video.src = window.URL.createObjectURL('broken');
-          video.srcObject=stream;
+var streaming = false,
+video        = document.querySelector('#video'),
+cover        = document.querySelector('#cover'),
+canvas       = document.querySelector('#canvas'),
+photo        = document.querySelector('#img-src'),
+startbutton  = document.querySelector('#startbutton'),
+filter = document.querySelector('#filter-src'),
+radio        = document.getElementsByName('filter'),
+width = 320,
+height = 240;
+
+function cam_on()
+{
+  //Get access to the camera!
+var camera_is_enabled = 0;
+if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    //Not adding `{ audio: true }` since we only want video now
+    navigator.mediaDevices.getUserMedia({ video: true }).then(function (stream) {
+        //video.src = window.URL.createObjectURL(stream);
+        if ("srcObject" in video) {
+            video.srcObject = stream;
+        }
+        else {
+            video.src = window.URL.createObjectURL(stream);
         }
         video.play();
-      },
-      function(err) {
-        console.log("An error occured! " + err);
-      }
-      );
-      
-      video.addEventListener('canplay', function(ev){
-        if (!streaming) {
-          height = video.videoHeight / (video.videoWidth/width);
-          video.setAttribute('width', width);
-          video.setAttribute('height', height);
-          canvas.setAttribute('width', width);
-          canvas.setAttribute('height', height);
-          streaming = true;
-        }
-      }, false);
-      
+        camera_is_enabled = 1;
+    })
+    .catch(function () {
+        camera_is_enabled = 0;
+        startbutton.disabled = true;
+        startbutton.value = "camera not allowed";
+    });
+}
+
+
+  video.addEventListener('canplay', function(ev){
+  if (!streaming) {
+  height = video.videoHeight / (video.videoWidth/width);
+  video.setAttribute('width', width);
+  video.setAttribute('height', height);
+  canvas.setAttribute('width', width);
+  canvas.setAttribute('height', height);
+  streaming = true;
+  }
+  }, false);
+
+}
+
+cam_on();
+
 function getfilter()
 {
-  radiobutton = document.querySelector('input[name="filter"]:checked').value;
+  const val = document.querySelector('input[name="filter"]:checked');
+  if (val)
+    radiobutton = val.value;
+  else
+    radiobutton = "imoji";
   if (radiobutton == "imoji")
   {
     document.getElementById('snap').setAttribute('src', 'public/img/sup/1.png');
@@ -138,5 +143,3 @@ startbutton.addEventListener('click', function(ev){
   takepicture();
   ev.preventDefault();
 }, false);
-
-})();
